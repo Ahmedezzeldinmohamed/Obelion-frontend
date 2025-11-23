@@ -3,7 +3,7 @@ name: Deploy Frontend (NodeJS)
 on:
   push:
     branches:
-      - main # will start when push on the main branch
+      - master # will start when push on the master branch
 
 jobs:
   deploy:
