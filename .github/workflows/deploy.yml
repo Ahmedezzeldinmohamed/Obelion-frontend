@@ -1,0 +1,38 @@
+name: Deploy Frontend (NodeJS)
+
+on:
+  push:
+    branches:
+      - main # will start when push on the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Deploy Frontend via SSH
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST_IP }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        
+        script: |
+          # 1. will install Docker/Git if not found
+          if ! [ -x "$(command -v docker)" ]; then
+            sudo apt update && sudo apt install -y git docker.io docker-compose
+            sudo usermod -aG docker $USER
+          fi
+          
+          # 2. Gather the new Code from GitHub
+          rm -rf obelion-frontend
+          git clone https://github.com/${{ github.repository }} obelion-frontend
+          cd obelion-frontend
+          
+          # 3. Build Docker Compose (will build Frontend and run on the Port 80)
+          sudo docker-compose up -d --build
+          
+          echo "Frontend Deployment finished successfully."
