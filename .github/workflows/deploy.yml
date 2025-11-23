@@ -28,8 +28,8 @@ jobs:
           fi
           
           # 2. Gather the new Code from GitHub
-          rm -rf obelion-frontend
-          git clone https://github.com/${{ github.repository }} obelion-frontend
+          sudo rm -rf obelion-frontend
+          sudo git clone https://github.com/${{ github.repository }} obelion-frontend
           cd obelion-frontend
           
           # 3. Build Docker Compose (will build Frontend and run on the Port 80)
