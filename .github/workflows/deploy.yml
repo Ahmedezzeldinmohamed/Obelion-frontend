@@ -33,6 +33,14 @@ jobs:
           cd obelion-frontend
           
           # 3. Build Docker Compose (will build Frontend and run on the Port 80)
+          # 3. Build Docker Compose
+          echo "--- Forcing Docker Cleanup (Stop & Remove All) ---"
+          sudo docker stop $(sudo docker ps -aq) || true
+          sudo docker rm $(sudo docker ps -aq) || true
+          
           sudo docker-compose up -d --build
+          
+          echo "--- Final Container Status Check ---"
+          sudo docker ps -a
           
           echo "Frontend Deployment finished successfully."
