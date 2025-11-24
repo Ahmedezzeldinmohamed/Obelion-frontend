@@ -2,12 +2,15 @@ version: '3.8'
 
 services:
   uptime-kuma:
-    container_name: uptime-kuma-dev
-    image: louislam/uptime-kuma:nightly2
-    volumes:
-      #- ./data:/app/data
-      - ../server:/app/server
-      - ../db:/app/db
+    container_name: uptime_kuma_web
+    image: louislam/uptime-kuma:latest
+    restart: always
+    
     ports:
-      - "80:3001"  # <Host Port>:<Container Port>
-      - "3307:3306"
+      - "80:3001"
+      
+    volumes:
+      - uptime-kuma-data:/app/data
+
+volumes:
+  uptime-kuma-data:
