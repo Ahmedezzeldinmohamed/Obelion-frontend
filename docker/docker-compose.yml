@@ -6,6 +6,7 @@ services:
     image: louislam/uptime-kuma:latest
     restart: always
     
+    # This is the fix: External Port 80 maps to internal 3001
     ports:
       - "80:3001"
       
